@@ -15,6 +15,15 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
+/**
+ * Extends Android WebView,
+ * allowing user of this class to validate host certificate against provided one.
+ *
+ * Usually your DevOps team would provide you with the certificate used by your api, you will deliver
+ * this certificate with application binary and test it PublicKeys of certificate of host against the
+ * PubLicKey of provided one.
+ * If the system is under MITM attack, the comparison will fail.
+ */
 public class PinnableWebView extends WebView {
 
     private CompromisedListener mCompromisedListener;
@@ -31,6 +40,10 @@ public class PinnableWebView extends WebView {
         super(context, attrs, defStyleAttr);
     }
 
+    /**
+     * Configures the class, with the event listener on which the result will be delivered.
+     * Allowing client class to prepare UI and messages for the user by implementing interface method.
+     */
     public void setCompromisedListener(CompromisedListener compromisedListener) {
         mCompromisedListener = compromisedListener;
     }
